@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'users.apps.UsersConfig',
     'payments.apps.PaymentsConfig',
-    'versionedapi.apps.VersionedapiConfig'
+    'versionedapi.apps.VersionedapiConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 100,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -145,8 +146,8 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'pagos': '7/minute',
-        'others': '9/minute',
+        'pagos': '1000 /day',
+        'others': '2000 /day',
     }
 }
 
