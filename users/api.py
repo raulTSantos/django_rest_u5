@@ -16,6 +16,7 @@ from rest_framework import permissions
 
 class SignUpView(generics.GenericAPIView):
     serializer_class = SignUpSerializer
+    #permission_classes = [permissions.IsAdminUser]
 
     def post(self, request: Request):
         data = request.data
@@ -39,15 +40,18 @@ class LoginView(APIView):
         password = request.data.get("password")
 
         user = authenticate(email=email, password=password)
+        
         if user is not None:
+           
             tokens = create_jwt_pair_for_user(user)
             idUser = User.objects.get(email=email)
-            response = {"message": "Logeado correctamente", "id": idUser.id ,"tokens": tokens}
+            response = {"message": "Logeado correctamente", "id": idUser.id ,"tokens": tokens,"name": idUser.username}
 
             return Response(data=response, status=status.HTTP_200_OK)
 
         else:
-            return Response(data={"message": "Correo inválido o contraseña incorrecta"})
+            
+            return Response(data={"message": "Correo inválido o contraseña incorrecta"}, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request: Request):
         content = {"user": str(request.user), "auth": str(request.auth)}
@@ -57,4 +61,4 @@ class LoginView(APIView):
 class GetUsers(viewsets.ReadOnlyModelViewSet):
     serializer_class = GetUserSerializer
     queryset = User.objects.all()
-    permission_classes =[permissions.IsAdminUser]
+    permission_classes =[permissions.IsAuthenticated]

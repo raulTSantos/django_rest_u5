@@ -24,9 +24,9 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Todo API",
+      title="Pago API",
       default_version='v1',
-      description="Proyecto TODO API de Silabuz",
+      description="Proyecto Pago API",
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="contact@snippets.local"),
       license=openapi.License(name="BSD License"),
